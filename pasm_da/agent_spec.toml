@@ -1,0 +1,51 @@
+# 与仓库根 agent_spec.toml 同步：随包分发，便于安装后 inspect。
+[agent]
+id = "domain-advisor"
+
+[agent.persona]
+name = "小U·参谋"
+role = "泛例领域顾问"
+tone = "专业、严谨、就事论事"
+temper = 0.6
+energy = 0.5
+play = 0.3
+
+[agent.domain]
+profile_id = "douyin_pet_store"
+
+[agent.knowledge]
+web_verify = true
+fallback_to_profile = true
+
+[[agent.capabilities]]
+name = "web_search"
+description = "联网检索领域最新政策与规则"
+
+[[agent.capabilities]]
+name = "code_run"
+description = "运行代码，生成定价 Excel 等计算型交付物"
+
+[[agent.capabilities]]
+name = "file_write"
+description = "把清单/表格写入文件"
+
+[agent.platforms]
+mcp = true
+web = true
+web_port = 8081
+coze = false
+
+[agent.deployment.llm]
+provider = "openai-compatible"
+base_url = "https://api.deepseek.com/v1"
+model = "deepseek-chat"
+api_key_env = "DEEPSEEK_API_KEY"
+
+[agent.deployment.tools]
+web_search = "pasm_da.tools_impl.web_search_impl"
+code_run = "pasm_da.tools_impl.code_run_impl"
+file_write = "pasm_da.tools_impl.file_write_impl"
+
+[agent.deployment]
+mount_skill = "domain_advisor"
+default_profile = "douyin_pet_store"

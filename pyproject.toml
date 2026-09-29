@@ -1,0 +1,46 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "pasm-domain-advisor"
+version = "0.1.0"
+description = "泛例 PASM 领域顾问引擎：声明式 DomainProfile + 前提抽取 + 现行规则核验 + 自检闸门。抖音开店/跨境电商/食品许可仅为示例实例，可复用到任意顾问领域。"
+readme = "README.md"
+requires-python = ">=3.9"
+license = { text = "MIT" }
+authors = [{ name = "arronzheng" }]
+keywords = ["pasm", "agent", "advisor", "llm", "compliance", "domain-profile", "self-check"]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Intended Audience :: Developers",
+]
+
+# 核心运行时**零第三方依赖**：装完即可 `pasm-da demo` 跑通（与 pasm-customer-service 同承诺）。
+# 接真 PASM 认知 / 生成 xlsx 走可选 extra，不装则自动降级。
+dependencies = []
+
+[project.optional-dependencies]
+pasm = ["pasm-framework>=0.4.0", "pasm-skills>=0.5.0"]
+xlsx = ["openpyxl"]
+llm = []
+
+[project.urls]
+Homepage = "https://gitee.com/arronzheng/pasm-domain-advisor"
+Documentation = "https://gitee.com/arronzheng/pasm-agents"
+Repository = "https://gitee.com/arronzheng/pasm-domain-advisor"
+
+[project.scripts]
+pasm-da = "pasm_da.cli:main"
+# MCP 服务器入口（供 WorkBuddy / ClawHub / Claude Desktop 以 stdio 拉起）
+pasm-da-mcp = "pasm_da.adapters.mcp:main"
+
+[tool.setuptools]
+packages = ["pasm_da", "pasm_da.profiles", "pasm_da.adapters"]
+
+[tool.setuptools.package-data]
+pasm_da = ["py.typed", "agent_spec.toml"]

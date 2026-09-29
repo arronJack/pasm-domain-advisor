@@ -1,0 +1,67 @@
+# =====================================================================
+# 泛例领域顾问 · 声明式规格（Agent Spec）
+# ---------------------------------------------------------------------
+# 同一份 spec，可被：本地 CLI / PASM Studio 场景模板 / MCP 适配器 /
+# Web 适配器 消费。人格 / 领域 profile / 能力 / 平台开关集中在此。
+# =====================================================================
+
+[agent]
+id = "domain-advisor"
+# persona 对应 pasm_skills.sdk.BaseAgent 的 persona 字段
+[agent.persona]
+name = "小U·参谋"
+role = "泛例领域顾问"
+tone = "专业、严谨、就事论事"
+temper = 0.6      # 主动性 0~1
+energy = 0.5      # 活跃度 0~1
+play = 0.3        # 俏皮度 0~1
+
+# 领域 profile：本技能是泛例，默认挂一个示例实例（抖音宠物店）。
+# 换成你自己的领域：把 profile_id 指向你注册的 DomainProfile。
+[agent.domain]
+profile_id = "douyin_pet_store"
+
+# 知识源：领域事实由 profile.knowledge 提供（引擎会灌进资料库）。
+# 这里声明"是否需要联网实时核验"（由部署层提供的 web_search 工具实现）。
+[agent.knowledge]
+web_verify = true            # 允许引擎按 profile.rule_queries 联网核验最新政策
+fallback_to_profile = true   # 无联网时退回 profile.knowledge 固化知识
+
+# 能力：暴露给平台的工具（对应 pasm_framework 的 @capability）。
+# 这三件正是小U 当年缺的：联网 / 算账 / 读写。
+[[agent.capabilities]]
+name = "web_search"
+description = "联网检索领域最新政策与规则（2025–2026 等现行规定）"
+
+[[agent.capabilities]]
+name = "code_run"
+description = "运行代码，用于生成定价 Excel 等计算型交付物"
+
+[[agent.capabilities]]
+name = "file_write"
+description = "把清单/表格写入文件，交给工作流或后台"
+
+# 平台分发开关
+[agent.platforms]
+mcp = true        # 通过 pasm-mcp-server 暴露给 MCP 兼容客户端
+web = true        # 通过 web_gateway 提供站点嵌入与 REST
+web_port = 8081
+coze = false      # 转译为 Coze 机器人配置（需手动导入）
+
+# ===== 部署接线（非机密，机密走环境变量）=====
+# 小U 要"真注入"三件套 + DeepSeek，部署层按这里接线即可。
+[agent.deployment.llm]
+provider = "openai-compatible"          # DeepSeek 走 OpenAI 兼容协议
+base_url = "https://api.deepseek.com/v1"
+model = "deepseek-chat"
+api_key_env = "DEEPSEEK_API_KEY"        # 从环境变量读，绝不落盘
+
+[agent.deployment.tools]
+web_search = "pasm_da.tools_impl.web_search_impl"   # 默认离线；设 PASM_DA_LIVE_WEB=1 才真联网
+code_run = "pasm_da.tools_impl.code_run_impl"       # 子进程跑 Python，生成定价表/算账
+file_write = "pasm_da.tools_impl.file_write_impl"  # 写盘，交给工作流
+
+[agent.deployment]
+# 领域内核：把 domain_advisor 当成小U 的"参谋内核"挂载，默认抖音实例。
+mount_skill = "domain_advisor"
+default_profile = "douyin_pet_store"
