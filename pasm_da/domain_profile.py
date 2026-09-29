@@ -77,6 +77,10 @@ class DomainProfile:
     # 已核验知识（固化的最新规则/要点）。联网缺失时的兜底，也作为闸门的事实基准。
     knowledge: List[Dict[str, object]] = field(default_factory=list)
 
+    # 触发词：宿主（聊天壳/客服/MCP 客户端）用它判断"这轮对话是否落在本领域"。
+    # 声明在 profile 里而不是硬编码在宿主——新增领域时宿主一行不用改（泛例铁律）。
+    match_keywords: List[str] = field(default_factory=list)
+
     def premise_signal(self, key: str) -> "PremiseSignal":
         for s in self.premise_signals:
             if s.key == key:

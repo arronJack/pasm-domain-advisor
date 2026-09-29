@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "pasm-domain-advisor"
-version = "0.1.0"
+version = "0.1.1"
 description = "泛例 PASM 领域顾问引擎：声明式 DomainProfile + 前提抽取 + 现行规则核验 + 自检闸门。抖音开店/跨境电商/食品许可仅为示例实例，可复用到任意顾问领域。"
 readme = "README.md"
 requires-python = ">=3.9"

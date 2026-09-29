@@ -22,7 +22,7 @@ from .domain_profile import DomainProfile, PremiseConstraint, PremiseSignal
 from .engine import AdvisoryReport, DomainAdvisor, VerifiedRule
 from . import profiles as profiles
 
-__version__ = "0.1.0"
+__version__ = "0.1.1"
 
 __all__ = [
     "DomainAdvisorAgent",

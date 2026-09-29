@@ -107,6 +107,11 @@ PROFILE = DomainProfile(
     ],
 
     deliverables=["checklist", "pricing_spreadsheet"],
+    match_keywords=[
+        "抖音店", "抖音小店", "抖店", "开店", "个体店", "个人店", "营业执照",
+        "宠物店", "猫砂", "冻干", "猫粮", "狗粮", "宠物用品", "小黄车",
+        "精选联盟", "保证金", "0元入驻", "零元入驻",
+    ],
 
     # 已核验的现行规则（联网缺失时的兜底，也是闸门的事实基准）。
     knowledge=[

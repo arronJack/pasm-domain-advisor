@@ -113,6 +113,11 @@ PROFILE = DomainProfile(
     ],
 
     deliverables=["checklist"],
+    match_keywords=[
+        "跨境电商", "跨境", "出海", "出口", "进口", "亚马逊", "速卖通",
+        "Shopee", "shopee", "TikTok Shop", "tiktok", "独立站", "报关",
+        "海关", "保税", "1210", "9610", "清关", "外币", "结汇",
+    ],
 
     knowledge=[
         {"title": "跨境电商零售进口综合税：限值内关税税率暂设为0，进口环节增值税、消费税按法定应纳税额的70%征收；单次交易限值2000元、年度限值26000元。"},

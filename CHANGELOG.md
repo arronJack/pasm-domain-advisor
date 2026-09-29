@@ -2,6 +2,20 @@
 
 > 装它：`pip install pasm-domain-advisor`
 
+## v0.1.1 —— match_keywords 领域路由（宿主接入就绪）
+
+### 新增
+- `DomainProfile.match_keywords`：profile 自声明触发词（泛例铁律——新增领域宿主零改动）。
+  三个内置实例已补齐：douyin_pet_store（抖音店/猫砂/冻干/个体店…）、
+  cross_border_ecom（跨境/报关/1210/9610…）、food_business_license（食品证/预包装/外卖…）。
+- `pasm_da.profiles.match(text)`：按命中数+关键词具体度打分的领域路由器，
+  供聊天壳做"这轮对话落在哪个领域"的判定（PASM Studio 0.31.11 首个接入方）。
+
+### 接入方
+- PASM Studio 桌面 0.31.11：`desktop/domain_advisor_bridge.py` 把
+  digest（生成前注入现行规则）+ gate_reply（生成后前提一致性闸门）
+  挂进小U 聊天管线。
+
 ## v0.1.0 —— 泛例领域顾问引擎首发（开店仅为示例）
 
 > 这是第一个正式版本。核心是一个**不写死任何业务词**的顾问引擎：
